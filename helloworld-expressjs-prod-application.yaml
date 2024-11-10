@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helloworld-expressjs-prod
+  namespace: argocd
+spec:
+  destination:
+    namespace: prod  # Namespace for non-prod environment
+    server: https://kubernetes.default.svc
+  project: helloworld-expressjs-prod  # Reference the non-prod project
+  source:
+    helm:
+      valueFiles:
+        - values.yaml  # Non-prod specific values file
+    repoURL: git@github.com:elitamsut/node-app.git  # Your repository
+    path: helloworld-expressjs  # Path to the Helm chart
+    targetRevision: master  # Use the develop branch for non-prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+

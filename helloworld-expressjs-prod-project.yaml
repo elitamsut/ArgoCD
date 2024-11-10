@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: helloworld-expressjs-prod
+  namespace: argocd
+spec:
+  description: "Project for production environment of helloworld-expressjs"
+  clusterResourceWhitelist:
+    - group: '*'  # Allow access to all cluster resources
+      kind: '*'
+  destinations:
+    - namespace: prod
+      server: https://kubernetes.default.svc  # Ensure this is correct for prod environment
+  sourceRepos:
+    - '*'  # Allow all source repositories
+    - git@github.com:elitamsut/node-app.git  # Specific repo for production environment

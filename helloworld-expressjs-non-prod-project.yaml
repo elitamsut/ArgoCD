@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: helloworld-expressjs-non-prod  # Updated to match the application name
+  namespace: argocd
+spec:
+  description: "Non-prod environment project for the helloworld-expressjs app"
+  clusterResourceWhitelist:
+    - group: '*'  # Allow access to all cluster resources
+      kind: '*'
+  destinations:
+    - namespace: non-prod
+      server: https://34.165.59.91
+  sourceRepos:
+    - '*'  # Allow all source repositories
+    - git@github.com:elitamsut/node-app.git  # Specific repo for production environment
